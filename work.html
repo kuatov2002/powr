@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+
+        var butt;
+        var main = {
+            "type": "container",
+            "items": []
+        };
+        function load() {
+
+        }
+        function asd() {
+        }
+
+        var sav = "";
+        var qw = "";
+        function test(elem, arr) {
+            for (let index = 0; index < arr.length; index++) {
+
+                // console.log(arr[index]);
+                if (arr[index].type == 'container') {
+                    console.log('qw');
+                    console.log(index);
+                    // console.log(elem);
+                    // console.log(arr);
+                    var DefCon = document.createElement("div");
+                    DefCon.setAttribute('class', 'container');
+
+                    // DefCon.appendChild(e);
+                    elem.appendChild(DefCon);
+                    console.log('about');
+                    console.log(DefCon);
+                    console.log(arr[index].items);
+                    console.log(arr[index]);
+                    // if (arr[index].items.length>0) {
+                    console.log('tr');
+                    // create(DefCon, arr[index].items)
+                    test(DefCon, arr[index].items);
+                    // }
+
+
+                }
+                if (arr[index].type == 'box') {
+                    var inp = document.createElement("input");
+                    inp.setAttribute('type', 'color');
+                    inp.setAttribute('class', 'input');
+                    elem.appendChild(inp);
+                }
+            }
+            var ad = document.createElement("input");
+            ad.setAttribute('type', 'button');
+            ad.setAttribute('class', 'add');
+            ad.setAttribute('value', 'Add');
+            ad.setAttribute('onclick', 'createCon(this)');
+            elem.appendChild(ad);
+        }
+        function create(elem, arr) {
+            console.log('elem');
+            console.log(elem);
+            console.log(arr);
+            let element = document.getElementsByClassName('container')[0];
+
+            // element.removeChild();
+            // console.log(element);
+            while (element.firstChild) {
+                element.removeChild(element.lastChild);
+            }
+
+            for (let index = 0; index < arr.length; index++) {
+
+                // console.log(arr[index]);
+                if (arr[index].type == 'container') {
+                    console.log('qw');
+                    console.log(index);
+                    // console.log(elem);
+                    // console.log(arr);
+                    var DefCon = document.createElement("div");
+                    DefCon.setAttribute('class', 'container');
+
+                    // DefCon.appendChild(e);
+                    elem.appendChild(DefCon);
+                    console.log('about');
+                    console.log(DefCon);
+                    console.log(arr[index].items);
+                    console.log(arr[index]);
+                    // if (arr[index].items.length>0) {
+                    console.log('tr');
+                    // create(DefCon, arr[index].items)
+                    test(DefCon,arr[index].items);
+                    // }
+
+
+                }
+                if (arr[index].type == 'box') {
+                    var inp = document.createElement("input");
+                    inp.setAttribute('type', 'color');
+                    inp.setAttribute('class', 'input');
+                    elem.appendChild(inp);
+                }
+            }
+            var ad = document.createElement("input");
+            ad.setAttribute('type', 'button');
+            ad.setAttribute('class', 'add');
+            ad.setAttribute('value', 'Add');
+            ad.setAttribute('onclick', 'createCon(this)');
+            elem.appendChild(ad);
+        }
+        function build() {
+            var element = document.getElementsByClassName('container')[0];
+            var html = element.outerHTML;
+            sav = html;
+            sav = sav.replaceAll('<div class="container">', '{"type":"container","items":[')
+            sav = sav.replaceAll('</div>', ']},')
+            sav = sav.replaceAll('<input type="color" class="input">', '{"type":"box"},')
+            sav = sav.replaceAll('<input type="button" class="add" value="Add" onclick="createCon(this)">', '')
+            sav = sav.substring(0, sav.length - 1)
+            sav = sav.replaceAll(',]', ']')
+            console.log(sav);
+            // console.log(JSON.parse(sav));
+            document.getElementById('text').value=sav;
+            // console.log('create');
+            // console.log(create(document.getElementsByClassName('container')[0],JSON.parse(sav).items));
+
+
+        }
+
+        function createBox(but) {
+
+            var parent = but.parentElement;
+            but.remove();
+            var elem = document.createElement("input");
+            elem.setAttribute('type', 'color');
+            elem.setAttribute('class', 'input');
+            parent.appendChild(elem);
+            parent.appendChild(but);
+        }
+        function createCon(but) {
+            butt = but;
+            document.getElementById('chos').style.top = gettop(but) - 40 + 'px';
+            document.getElementById('chos').style.left = getoff(but) - 40 + 'px';
+            document.getElementById('chos').style.visibility = 'visible';
+        }
+        function adbox() {
+            getoff(butt);
+            var parent = butt.parentElement;
+            butt.remove();
+            var elem = document.createElement("input");
+            elem.setAttribute('type', 'color');
+            elem.setAttribute('class', 'input');
+            parent.appendChild(elem);
+            parent.appendChild(butt);
+            document.getElementById('chos').style.visibility = 'hidden';
+        }
+
+        function adcon() {
+            var DefCon = document.createElement("div");
+            DefCon.setAttribute('class', 'container');
+            var ad = document.createElement("input");
+            ad.setAttribute('type', 'button');
+            ad.setAttribute('class', 'add');
+            ad.setAttribute('value', 'Add');
+            ad.setAttribute('onclick', 'createCon(this)');
+            DefCon.appendChild(ad);
+
+            var parent = butt.parentElement;
+            butt.remove();
+            parent.appendChild(DefCon);
+            parent.appendChild(butt);
+            document.getElementById('chos').style.visibility = 'hidden';
+        }
+        function getoff(elem) {
+            let all = elem.offsetLeft;
+            let temp = elem;
+            while (temp.parentElement.tagName != 'BODY') {
+                temp = temp.parentElement;
+                all += temp.offsetLeft;
+            }
+            // console.log(all);
+            return all;
+            // console.log(elem.parentElement.parentElement.tagName=='BODY');
+        }
+        function gettop(elem) {
+            let to = elem.offsetTop;
+            let temp1 = elem;
+            while (temp1.parentElement.tagName != 'BODY') {
+                temp1 = temp1.parentElement;
+                to += temp1.offsetTop;
+            }
+            // console.log(to);
+            return to;
+        }
+    </script>
+    <style>
+        .container {
+            position: relative;
+            margin: 10px;
+            border: 3px solid black;
+            width: fit-content;
+            height: fit-content;
+            display: inline-block;
+            padding: 30px;
+        }
+
+        .add,
+        #box,
+        #cont {
+            font-weight: bold;
+            background-color: #494949;
+            border: none;
+            /* border-radius: 10px; */
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            top: 50px;
+        }
+
+        .input {
+            border: 0px solid black;
+            height: 100px;
+            width: 100px;
+            margin: 0px;
+            padding: 0;
+        }
+
+        #chos {
+            position: absolute;
+            width: fit-content;
+            height: fit-content;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body onclick="asd()" onload="load()">
+    <link rel="stylesheet" href="style.css">
+    <div class="container">
+        <input type="button" class="add" value="Add" onclick="createCon(this)">
+    </div>
+    <div id="chos">
+        <input type="button" id="box" value="Box" onclick="adbox()">
+        <input type="button" id="cont" value="Container" onclick="adcon()">
+    </div>
+    <div id="create"><input type="text" id="text"><input type="button" value="create"
+            onclick="create(document.getElementsByClassName('container')[0],JSON.parse(document.getElementById('text').value).items)"><input
+            type="button" value="Build" onclick="build()"></div>
+
+
+</body>
+
+</html>
